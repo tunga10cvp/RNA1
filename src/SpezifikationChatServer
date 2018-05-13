@@ -1,0 +1,42 @@
+/* ---- Spezifikationen eines Chat Server/Client Protokolls --- */
+
+--- Client ---
+/*Verbindungsaufbau*/
+Die Verbindung zum Server wird mittels einer TCP Verbindung aufgebaut und aufrecht erhalten.
+Dabei nutzt der Client die Java Socket Klasse und verbindet sich auf den TCP Port (siehe Ports).
+Wir haben diese Protokoll ausgewählt,denn die Client-Anmeldung/Abmeldung und Abfrage der Informationen 
+auf dem Server muss vor Datenverlust geschützt werden (ohne Verschlüsselung), das bietet UDP-Protokoll nicht.  
+
+/*Senden von Nachrichten*/
+Das senden der Textnachrichten an den Sever erfolgt über einen UDP Socket. Dabei verbindet sich der Client
+auf den UDP Port des Servers (siehe Server - Ports).
+
+/*Senden von Nachrichten an den Client*/
+Das Senden der Textnachrichten an den Client erfolgt über einen TCP Socket. 
+Dabei wird die Nachrichten an allen Client gesendet. 
+
+
+
+--- Server ---
+/*Maximalgröße der Nachrichten */
+Der Server bieten einen Puffer von 1024 Byte für die empfangenen Nachrichten.
+
+/*Die maximale Anzahl der Client */
+10 Client können gleichzeitig auf dem Server zugreiffen
+
+/*Befehle*/
+MESSAGE=<Nachricht des Servers>     - diese vom Server gesendeten Nachrichten werden vom Client ausgegeben.
+DISCONNECTED                        - wird vom Server an alle Clients gesendet bevor dieser sich beendet.
+LOGOUT=<Username>                   - beendet die TCP Verbindung und sendet eine Logout Nachricht an die verbliebenen Clients.
+CONNECTIONREQUEST=<Username>        - baut eine Verbindung mit dem TCP Port auf und sendet eine Nachricht an alle im Chatraum
+                                      sich im Chatraum befindenden Clients.
+/* Zeichencodierung */
+
+/* Anfragehäufigkeit */
+
+/* Fehlermeldungen */
+                                      
+--- Server - Ports ---
+UDP Port = 56790,
+TCP Port = 56789,
+
